@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GroundMat
-  m_Shader: {fileID: 4800000, guid: 1d96f6c99d28e534e8039f847ea12b5c, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 5e2aef94e453c3743bd2d58cafa48393, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -80,12 +80,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _OverTexture:
+        m_Texture: {fileID: 2800000, guid: 5ea1dee2de35a6d4d95c596c1eafa9b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RockTex:
         m_Texture: {fileID: 2800000, guid: 5ea1dee2de35a6d4d95c596c1eafa9b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SlopeTexture:
+        m_Texture: {fileID: 2800000, guid: 282328413c0d9e242a550ee6358c706f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -105,6 +113,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TopTexture:
+        m_Texture: {fileID: 2800000, guid: d69797f8742fba24b827fcb42ebc86f3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UnderTexture:
         m_Texture: {fileID: 2800000, guid: d69797f8742fba24b827fcb42ebc86f3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -144,7 +156,8 @@ Material:
     - _GlossyReflections: 0
     - _HeightBlendRange: 1
     - _HeightContrast: 1.38
-    - _HeightScale: 0.1
+    - _HeightOffSet: -14.39
+    - _HeightScale: 0.06
     - _HeightVariation: 0.1
     - _Metallic: 0
     - _MidHeight: 0
@@ -162,6 +175,7 @@ Material:
     - _SlopeBlendRange: 0.027
     - _SlopeContrast: 2
     - _SlopeInfluence: 0.55
+    - _SlopeMultiply: 1.14
     - _SlopeScale: 48.82
     - _SlopeThreshold: 1
     - _Smoothness: 0.5
