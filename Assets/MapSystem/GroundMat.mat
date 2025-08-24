@@ -156,7 +156,7 @@ Material:
     - _GlossyReflections: 0
     - _HeightBlendRange: 1
     - _HeightContrast: 1.38
-    - _HeightOffSet: 3.82
+    - _HeightOffSet: -2.59
     - _HeightScale: 0.87
     - _HeightVariation: 0.1
     - _Metallic: 0
@@ -175,7 +175,7 @@ Material:
     - _SlopeBlendRange: 0.027
     - _SlopeContrast: 2
     - _SlopeInfluence: 0.55
-    - _SlopeMultiply: 5.32
+    - _SlopeMultiply: 2.51
     - _SlopeScale: 48.82
     - _SlopeThreshold: 1
     - _Smoothness: 0.5
