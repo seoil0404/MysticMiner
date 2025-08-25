@@ -646,8 +646,15 @@ MonoBehaviour:
   noiseScale: 20
   heightScale: 7.5
   viewDistance: 3
+  seed: 0
+  offsetX: 1000
+  offsetZ: 1000
+  baseHeight: -4
+  peakThreshold: 0.9
+  peakMultiplier: 1.5
   player: {fileID: 432919586}
   terrainMaterial: {fileID: 2100000, guid: 5d78b192b46befe45850fcff491d7b9a, type: 2}
+  useColliders: 1
 --- !u!4 &1715091453
 Transform:
   m_ObjectHideFlags: 0
