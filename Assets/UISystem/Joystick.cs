@@ -20,7 +20,6 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
         }
 
         instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void OnPointerDown(PointerEventData eventData)

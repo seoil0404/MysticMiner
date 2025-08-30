@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovementHandler))]
 [RequireComponent(typeof(PlayerHealthManager))]
-[RequireComponent(typeof(PlayerCombatHandler))]
+[RequireComponent(typeof(PlayerWorkHandler))]
 [RequireComponent(typeof(PlayerSoundManager))]
 [RequireComponent(typeof(PlayerRenderManager))]
 public class PlayerController : MonoBehaviour
@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private PlayerHealthManager healthManager;
     private PlayerSoundManager soundManager;
     private PlayerRenderManager renderManager;
-    private PlayerCombatHandler combatHandler;
+    private PlayerWorkHandler workHandler;
 
     private PlayerContext playerContext = new();
     private PlayerState playerState = new();
@@ -29,13 +29,13 @@ public class PlayerController : MonoBehaviour
         healthManager = GetComponent<PlayerHealthManager>();
         soundManager = GetComponent<PlayerSoundManager>();
         renderManager = GetComponent<PlayerRenderManager>();
-        combatHandler = GetComponent<PlayerCombatHandler>();
+        workHandler = GetComponent<PlayerWorkHandler>();
 
         playerContext.MovementHandler = movementHandler;
         playerContext.HealthManager = healthManager;
         playerContext.SoundManager = soundManager;
         playerContext.RenderManager = renderManager;
-        playerContext.CombatHandler = combatHandler;
+        playerContext.WorkHandler = workHandler;
         
     }
 
