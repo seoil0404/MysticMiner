@@ -14,6 +14,7 @@ public class ChunkTerrainManager : MonoBehaviour
     [SerializeField] private float baseHeight = -10f;
     [SerializeField] private float peakThreshold = 0.7f;
     [SerializeField] private float peakMultiplier = 3f;
+    [SerializeField] private float worldScale = 0.5f;
 
     [Header("References")]
     public Transform player;
@@ -36,8 +37,8 @@ public class ChunkTerrainManager : MonoBehaviour
         noiseOffsetZ = prng.Next(-100000, 100000) + offsetZ;
 
         Vector2Int currentChunk = new Vector2Int(
-            Mathf.FloorToInt(player.position.x / chunkSize),
-            Mathf.FloorToInt(player.position.z / chunkSize)
+            Mathf.FloorToInt(player.position.x / (chunkSize)),
+            Mathf.FloorToInt(player.position.z / (chunkSize))
         );
 
         UpdateChunks(currentChunk);
@@ -56,6 +57,7 @@ public class ChunkTerrainManager : MonoBehaviour
         if (currentChunk != lastPlayerChunk)
         {
             UpdateChunks(currentChunk);
+
             lastPlayerChunk = currentChunk;
         }
     }
@@ -166,7 +168,7 @@ public class ChunkTerrainManager : MonoBehaviour
                     float sampleX = (worldX + noiseOffsetX) / noiseScale * frequency;
                     float sampleZ = (worldZ + noiseOffsetZ) / noiseScale * frequency;
 
-                    float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ);
+                    float perlinValue = Mathf.PerlinNoise(sampleX * worldScale, sampleZ * worldScale);
                     noiseHeight += perlinValue * amplitude;
 
                     amplitude *= persistence;

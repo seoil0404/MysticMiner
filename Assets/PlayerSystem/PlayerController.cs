@@ -1,0 +1,53 @@
+using UnityEngine;
+
+[RequireComponent(typeof(PlayerMovementHandler))]
+[RequireComponent(typeof(PlayerHealthManager))]
+[RequireComponent(typeof(PlayerCombatHandler))]
+[RequireComponent(typeof(PlayerSoundManager))]
+[RequireComponent(typeof(PlayerRenderManager))]
+public class PlayerController : MonoBehaviour
+{
+    private static PlayerController instance { get; set; }
+
+    public static PlayerContext PlayerContext => instance.playerContext;
+    public static PlayerState PlayerState => instance.playerState;
+
+    private PlayerMovementHandler movementHandler;
+    private PlayerHealthManager healthManager;
+    private PlayerSoundManager soundManager;
+    private PlayerRenderManager renderManager;
+    private PlayerCombatHandler combatHandler;
+
+    private PlayerContext playerContext = new();
+    private PlayerState playerState = new();
+
+    private void Awake()
+    {
+        SetSingleTone();
+
+        movementHandler = GetComponent<PlayerMovementHandler>();
+        healthManager = GetComponent<PlayerHealthManager>();
+        soundManager = GetComponent<PlayerSoundManager>();
+        renderManager = GetComponent<PlayerRenderManager>();
+        combatHandler = GetComponent<PlayerCombatHandler>();
+
+        playerContext.MovementHandler = movementHandler;
+        playerContext.HealthManager = healthManager;
+        playerContext.SoundManager = soundManager;
+        playerContext.RenderManager = renderManager;
+        playerContext.CombatHandler = combatHandler;
+        
+    }
+
+    private void SetSingleTone()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+}
