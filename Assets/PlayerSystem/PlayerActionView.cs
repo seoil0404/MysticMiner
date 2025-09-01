@@ -10,7 +10,7 @@ public class PlayerActionView : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         isActioning = true;
         if(PlayerController.PlayerState.EquipmentState == PlayerState.EquipmentStateType.Tool)
         {
-            PlayerController.PlayerContext.WorkHandler.Mine();
+            PlayerController.PlayerContext.WorkHandler.Act();
         }
     }
 
@@ -19,7 +19,7 @@ public class PlayerActionView : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         isActioning = false;
         if (PlayerController.PlayerState.EquipmentState == PlayerState.EquipmentStateType.Tool)
         {
-            PlayerController.PlayerContext.WorkHandler.UnMine();
+            PlayerController.PlayerContext.WorkHandler.UnAct();
         }
     }
 }

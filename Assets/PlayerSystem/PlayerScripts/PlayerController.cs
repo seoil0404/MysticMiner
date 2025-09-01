@@ -39,6 +39,20 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        Test();
+    }
+
+    private void Test()
+    {
+        Inventory.AddItem(new UnCommonSword());
+        for(int index = 0; index < 0; index++)
+            Inventory.AddItem(new UnCommonSword());
+        Inventory.AddItem(new CommonSword());
+        Inventory.AddItem(new CommonSword());
+    }
+
     private void SetSingleTone()
     {
         if (instance != null)

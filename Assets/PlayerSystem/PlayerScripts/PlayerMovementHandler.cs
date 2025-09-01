@@ -17,6 +17,11 @@ public class PlayerMovementHandler : MonoBehaviour
         set => rigidBody.linearVelocity = value;
     }
 
+    public float Speed
+    {
+        get => rigidBody.linearVelocity.magnitude;
+    }
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -25,10 +30,10 @@ public class PlayerMovementHandler : MonoBehaviour
     private void Update()
     {
         HandleVelocity();
-        HandleRotate();
+        HandleCameraRotate();
     }
 
-    private void HandleRotate()
+    private void HandleCameraRotate()
     {
         if (Joystick.IsDragging)
             return;

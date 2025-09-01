@@ -2,19 +2,44 @@ using UnityEngine;
 
 public class PlayerWorkHandler : MonoBehaviour
 {
-    private bool isMining = false;
+    public EquipmentItem EquipmentItem;
 
-    public void Attack()
+    public void Act()
+    {
+        switch(EquipmentItem.EquipmentType)
+        {
+            case EquipmentItem.EquipmentKind.Weapon:
+                Attack();
+                break;
+            case EquipmentItem.EquipmentKind.Pickaxe:
+                Mine();
+                break;
+        }
+    }
+
+    public void UnAct()
+    {
+        switch (EquipmentItem.EquipmentType)
+        {
+            case EquipmentItem.EquipmentKind.Weapon:
+                break;
+            case EquipmentItem.EquipmentKind.Pickaxe:
+                UnMine();
+                break;
+        }
+    }
+
+    private void Attack()
     {
 
     }
 
-    public void Mine()
+    private void Mine()
     {
         PlayerController.PlayerContext.RenderManager.Mine();
     }
 
-    public void UnMine()
+    private void UnMine()
     {
         PlayerController.PlayerContext.RenderManager.UnMine();
     }

@@ -1,112 +1,84 @@
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using NUnit.Framework;
 
 public static class Inventory
 {
-    // --- 내부 저장소 ---
-    private static Dictionary<string, int> stackables = new();   // Common, Consumable
-    private static List<EquipmentItem> equipments = new();       // Equipment
-    private static List<ArtifactItem> artifacts = new();         // Artifact (효과 발동)
-    private static List<ArtifactItem> storedArtifacts = new();   // 초과 아티팩트 (효과 없음)
-
-    // --- 아티팩트 제한 ---
-    public static int MaxArtifacts { get; private set; } = 3;
-
-    public static void SetMaxArtifacts(int newLimit)
+    private static Dictionary<Type, List<Item>> data = new() 
     {
-        if (newLimit < 0)
-            throw new System.ArgumentException("MaxArtifacts는 0 이상이어야 합니다.");
+        { typeof(CommonSword), new() },
+        { typeof(UnCommonSword), new() }
+    };
 
-        // 현재 보유 중인 Artifact가 초과하면 일반 인벤토리로 이동
-        if (newLimit < artifacts.Count)
+    public static IReadOnlyDictionary<Type, IReadOnlyList<Item>> Data
+    {
+        get => data.ToDictionary(
+            keyValuePair => keyValuePair.Key, 
+            keyValuePair => (IReadOnlyList<Item>)keyValuePair.Value.AsReadOnly()
+            );
+    }
+
+    public static int SlotCount
+    {
+        get
         {
-            int excess = artifacts.Count - newLimit;
-            for (int i = 0; i < excess; i++)
+            int count = 0;
+
+            foreach( var item in data.Values )
             {
-                var lastArtifact = artifacts[^1];
-                lastArtifact.OnRemovedFromInventory();
-                artifacts.RemoveAt(artifacts.Count - 1);
-                storedArtifacts.Add(lastArtifact); // 효과 없는 보관 전환
+                count += item.Count;
             }
-        }
 
-        MaxArtifacts = newLimit;
+            return count;
+        }
     }
 
-    // --- 아이템 추가 ---
-    public static bool AddItem(Item item)
+    public static void AddItem(Item item)
     {
-        switch (item.Type)
+        if(data.TryGetValue(item.GetType(), out var list))
         {
-            case Item.ItemType.Common:
-            case Item.ItemType.Consumable:
-                if (stackables.ContainsKey(item.Name))
-                    stackables[item.Name]++;
-                else
-                    stackables[item.Name] = 1;
-                return true;
+            if (list.Count == 0)
+            {
+                list.Add(item);
+                return;
+            }
 
-            case Item.ItemType.Equipment:
-                if (equipments.Exists(e => e.Name == item.Name))
-                    return false; // 중복 장비 불가
-                equipments.Add((EquipmentItem)item);
-                return true;
+            if(item is IStackableItem stackableItem)
+            {
+                ((IStackableItem)list[0]).Count += stackableItem.Count;
+            }
+            else list.Add(item);
 
-            case Item.ItemType.Artifact:
-                // 이미 보유 중이면 거부 (중복 불가)
-                if (artifacts.Exists(a => a.Name == item.Name) || storedArtifacts.Exists(a => a.Name == item.Name))
-                    return false;
-
-                if (artifacts.Count < MaxArtifacts)
-                {
-                    artifacts.Add((ArtifactItem)item);
-                    ((ArtifactItem)item).OnAddedToInventory();
-                }
-                else
-                {
-                    storedArtifacts.Add((ArtifactItem)item); // 일반 인벤토리로만 저장
-                }
-                return true;
-
-            default:
-                return false;
+            return;
         }
+        throw new NullReferenceException("Inventory don't have every item: " + nameof(item));
     }
 
-    // --- 아이템 제거 ---
-    public static bool RemoveItem(Item item)
+    public static void RemoveItem(Item item)
     {
-        switch (item.Type)
+        if (data.TryGetValue(item.GetType(), out var list))
         {
-            case Item.ItemType.Common:
-            case Item.ItemType.Consumable:
-                if (stackables.ContainsKey(item.Name))
-                {
-                    stackables[item.Name]--;
-                    if (stackables[item.Name] <= 0)
-                        stackables.Remove(item.Name);
-                    return true;
-                }
-                return false;
+            if (list.Count == 0) throw new NullReferenceException("Tried Remove Item that does NOT EXIST: " + nameof(item));
 
-            case Item.ItemType.Equipment:
-                return equipments.Remove((EquipmentItem)item);
+            if (item is IStackableItem stackableItem)
+            {
+                ((IStackableItem)list[0]).Count -= stackableItem.Count;
+                if(((IStackableItem)list[0]).Count == 0) list.Clear();
+            }
+            else list.Remove(item);
 
-            case Item.ItemType.Artifact:
-                if (artifacts.Remove((ArtifactItem)item))
-                {
-                    ((ArtifactItem)item).OnRemovedFromInventory();
-                    return true;
-                }
-                return storedArtifacts.Remove((ArtifactItem)item);
-
-            default:
-                return false;
+            return;
         }
+        throw new NullReferenceException("Inventory don't have every item: " + nameof(Item));
     }
 
-    // --- 조회용 ---
-    public static IReadOnlyDictionary<string, int> Stackables => stackables;
-    public static IReadOnlyList<EquipmentItem> Equipments => equipments;
-    public static IReadOnlyList<ArtifactItem> Artifacts => artifacts;          // 효과 발동 중
-    public static IReadOnlyList<ArtifactItem> StoredArtifacts => storedArtifacts; // 효과 없음
+    public static void DecreaseItem(IStackableItem item, int count)
+    {
+        IStackableItem currentItem = ((IStackableItem)data[item.GetType()][0]);
+
+        currentItem.Count -= count;
+        if (currentItem.Count== 0) data[item.GetType()].Clear();
+    }
 }
