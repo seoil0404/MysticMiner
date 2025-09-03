@@ -12,6 +12,7 @@ public class EquipmentInventoryItemView : MonoBehaviour
         get => item;
         set
         {
+            if (value == null) return;
             item = value;
             Sprite = item.Sprite;
         }
@@ -27,6 +28,7 @@ public class EquipmentInventoryItemView : MonoBehaviour
 
     public void OnSelected()
     {
-        InventoryView.Instance.SelectedItemView.SelectedItem = Item;
+        if (Item == null) return;
+        EquipmentInventoryView.Instance.SelectedItemView.SelectedItem = Item;
     }
 }

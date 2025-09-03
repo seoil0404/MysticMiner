@@ -10,7 +10,7 @@ public class EquipmentInventorySelectedItemView : MonoBehaviour
 
     private Item item;
 
-    public Item Item
+    public Item SelectedItem
     {
         set
         {
@@ -35,10 +35,14 @@ public class EquipmentInventorySelectedItemView : MonoBehaviour
     public void Disable()
     {
         image.gameObject.SetActive(false);
+        nameText.gameObject.SetActive(false);
+        descriptionText.gameObject.SetActive(false);
     }
 
     public void Enable()
     {
         image.gameObject.SetActive(true);
+        nameText.gameObject.SetActive(true);
+        descriptionText.gameObject.SetActive(true);
     }
 }

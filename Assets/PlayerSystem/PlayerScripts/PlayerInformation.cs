@@ -11,12 +11,5 @@ public class PlayerContext
 
 public class PlayerState
 {
-    public EquipmentStateType EquipmentState => EquipmentStateType.Tool;
     public float Speed => PlayerController.PlayerContext.MovementHandler.Speed;
-
-    public enum EquipmentStateType
-    {
-        Weapon,
-        Tool
-    }
 }

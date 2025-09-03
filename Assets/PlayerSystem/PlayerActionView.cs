@@ -8,18 +8,12 @@ public class PlayerActionView : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     public void OnPointerDown(PointerEventData eventData)
     {
         isActioning = true;
-        if(PlayerController.PlayerState.EquipmentState == PlayerState.EquipmentStateType.Tool)
-        {
-            PlayerController.PlayerContext.WorkHandler.Act();
-        }
+        PlayerController.PlayerContext.WorkHandler.Act();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         isActioning = false;
-        if (PlayerController.PlayerState.EquipmentState == PlayerState.EquipmentStateType.Tool)
-        {
-            PlayerController.PlayerContext.WorkHandler.UnAct();
-        }
+        PlayerController.PlayerContext.WorkHandler.UnAct();
     }
 }

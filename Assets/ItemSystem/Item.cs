@@ -7,6 +7,8 @@ using UnityEngine.Rendering;
 public abstract class Item
 {
     private static Dictionary<Type, Sprite> itemSprites = new();
+    private static Dictionary<Type, GameObject> itemModels = new();
+
     public Sprite Sprite
     {
         get
@@ -18,6 +20,20 @@ public abstract class Item
             itemSprites.Add(GetType(), sprite);
 
             return sprite;
+        }
+    }
+
+    public GameObject Model
+    {
+        get
+        {
+            if (itemModels.TryGetValue(GetType(), out var model))
+                return model;
+
+            model = Resources.Load<GameObject>($"Item/Model/{Name}");
+            itemModels.Add(GetType(), model);
+
+            return model;
         }
     }
 
@@ -49,6 +65,7 @@ public abstract class CommonItem : Item, IStackableItem
 public abstract class EquipmentItem : Item
 {
     public override ItemType Type => ItemType.Equipment;
+    public abstract float Radius { get; }
     public abstract EquipmentKind EquipmentType { get; }
 
     public enum EquipmentKind
@@ -61,9 +78,9 @@ public abstract class EquipmentItem : Item
 public abstract class Pickaxe : EquipmentItem
 {
     public override EquipmentKind EquipmentType => EquipmentKind.Pickaxe;
-    public abstract float MiningPower { get; }
+    public abstract int MiningPower { get; }
     public abstract float MiningSpeed { get; }
-    public abstract float DropRate { get; }
+    public abstract int DropRate { get; }
 }
 
 public abstract class Weapon : EquipmentItem

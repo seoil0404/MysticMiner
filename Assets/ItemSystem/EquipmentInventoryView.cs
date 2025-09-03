@@ -4,6 +4,9 @@ using UnityEngine;
 public class EquipmentInventoryView : MonoBehaviour
 {
     [SerializeField] private EquipmentInventorySelectedItemView selectedItemView;
+    [SerializeField] private EquipmentInventoryItemView mainEquipmentItemView;
+
+    public EquipmentInventorySelectedItemView SelectedItemView;
 
     public static EquipmentInventoryView Instance { get; private set; }
 
@@ -29,6 +32,7 @@ public class EquipmentInventoryView : MonoBehaviour
 
     public void Refresh()
     {
+        mainEquipmentItemView.Item = EquipmentInventory.MainEquipment;
         selectedItemView.Refresh();
     }
 }

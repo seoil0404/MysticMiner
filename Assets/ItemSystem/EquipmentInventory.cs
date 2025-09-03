@@ -14,6 +14,7 @@ public static class EquipmentInventory
 
             Inventory.RemoveItem(value);
             mainEquipment = value;
+            PlayerController.PlayerContext.RenderManager.OnEquip(mainEquipment);
         }
     }
 }

@@ -8,8 +8,7 @@ public static class Inventory
 {
     private static Dictionary<Type, List<Item>> data = new() 
     {
-        { typeof(CommonSword), new() },
-        { typeof(UnCommonSword), new() }
+        { typeof(CommonPick), new() },
     };
 
     public static IReadOnlyDictionary<Type, IReadOnlyList<Item>> Data
@@ -50,6 +49,26 @@ public static class Inventory
                 ((IStackableItem)list[0]).Count += stackableItem.Count;
             }
             else list.Add(item);
+
+            return;
+        }
+        throw new NullReferenceException("Inventory don't have every item: " + nameof(item));
+    }
+
+    public static void AddItem(Item item, int count)
+    {
+        if (data.TryGetValue(item.GetType(), out var list))
+        {
+            if (list.Count == 0)
+            {
+                list.Add(item);
+                return;
+            }
+
+            if (item is IStackableItem stackableItem)
+            {
+                ((IStackableItem)list[0]).Count += count;
+            }
 
             return;
         }

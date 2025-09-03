@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class EquipmentInventoryActiveView : MonoBehaviour
 {
+    [SerializeField] private EquipmentInventoryView inventoryView;
     public void ActiveEquiptmentInventory()
     {
-        EquipmentInventoryView.Instance.gameObject.SetActive(true);
+         inventoryView.gameObject.SetActive(true);
     }
 }

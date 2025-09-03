@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PlayerWorkHandler : MonoBehaviour
 {
-    public EquipmentItem EquipmentItem;
-
     public void Act()
     {
-        switch(EquipmentItem.EquipmentType)
+        if (EquipmentInventory.MainEquipment == null) return;
+
+        switch(EquipmentInventory.MainEquipment.EquipmentType)
         {
             case EquipmentItem.EquipmentKind.Weapon:
                 Attack();
@@ -19,7 +19,9 @@ public class PlayerWorkHandler : MonoBehaviour
 
     public void UnAct()
     {
-        switch (EquipmentItem.EquipmentType)
+        if (EquipmentInventory.MainEquipment == null) return;
+
+        switch (EquipmentInventory.MainEquipment.EquipmentType)
         {
             case EquipmentItem.EquipmentKind.Weapon:
                 break;
@@ -27,6 +29,16 @@ public class PlayerWorkHandler : MonoBehaviour
                 UnMine();
                 break;
         }
+    }
+
+    public void OnEquip(EquipmentItem item, GameObject itemModel)
+    {
+        if (item is Pickaxe pick)
+        {
+            PickaxeManager pickaxeManager = itemModel.AddComponent<PickaxeManager>();
+            pickaxeManager.Initialize(pick);
+        }
+        else throw new System.NotImplementedException();
     }
 
     private void Attack()

@@ -1,40 +1,16 @@
 using UnityEngine;
 
-public class CommonSword : ConsumableItem
+public class CommonPick : Pickaxe
 {
+    public override int MiningPower => 1;
 
-    public override string Name => "CommonSword";
+    public override float MiningSpeed => 5;
 
-    public override string Description => "It is CommonSword As Test Item";
+    public override int DropRate => 1;
 
-    public override void Use()
-    {
-        
-    }
+    public override string Name => "CommonPick";
+
+    public override string Description => "Common Pick for test";
+
+    public override float Radius => 2f;
 }
-
-public class UnCommonSword : Weapon
-{
-    public override float Strengh => 1;
-
-    public override float Power => 1;
-
-    public override float Defense => 1;
-
-    public override float Health => 1;
-
-    public override float Speed => 1;
-
-    public override float Mana => 1;
-
-    public override float AttackSpeed => 1;
-
-    public override float CriticalChance => 1;
-
-    public override float CriticalMultiply => 1;
-
-    public override string Name => "UncommonSword";
-
-    public override string Description => "It is UncommonSword As Test Item";
-}
-
