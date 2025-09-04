@@ -2,14 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 
 public static class Inventory
 {
-    private static Dictionary<Type, List<Item>> data = new() 
-    {
-        { typeof(CommonPick), new() },
-    };
+    private static Dictionary<Type, List<Item>> data = Assembly
+        .GetExecutingAssembly()
+        .GetTypes()
+        .Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(Item)))
+        .ToDictionary(t => t, t => new List<Item>());
 
     public static IReadOnlyDictionary<Type, IReadOnlyList<Item>> Data
     {

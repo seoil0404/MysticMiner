@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
+[RequireComponent(typeof(MeshCollider))]
 public abstract class Ore : MonoBehaviour
 {
     public abstract Item OreItem { get; }
@@ -18,7 +19,9 @@ public abstract class Ore : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth < 0)
         {
-            Inventory.AddItem(OreItem, pickaxe.DropRate);
+            if (this is IStackableItem)
+                Inventory.AddItem(OreItem, pickaxe.DropRate);
+            else Inventory.AddItem(OreItem);
 
             Destroy(gameObject);
         }

@@ -46,7 +46,8 @@ public class PlayerController : MonoBehaviour
 
     private void Test()
     {
-        Inventory.AddItem(new CommonPick());
+        for(int index = 0; index < 1; index++)
+            Inventory.AddItem(new CommonPick());
     }
 
     private void SetSingleTone()

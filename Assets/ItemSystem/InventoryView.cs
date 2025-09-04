@@ -68,9 +68,6 @@ public class InventoryView : MonoBehaviour
         RectTransform slotRect = itemViewPrefab.GetComponent<RectTransform>();
         gridLayout.cellSize = slotRect.sizeDelta;
 
-        // 정렬
-        gridLayout.childAlignment = TextAnchor.UpperCenter;
-
         // 패딩 적용
         gridLayout.padding.top = padding;
         gridLayout.padding.bottom = padding;

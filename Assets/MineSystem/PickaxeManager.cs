@@ -9,6 +9,8 @@ public class PickaxeManager : MonoBehaviour
     private Rigidbody rigidBody;
     private SphereCollider sphereCollider;
 
+    private Ore ore;
+
     public void Initialize(Pickaxe pickaxe)
     {
         this.pickaxe = pickaxe;
@@ -18,16 +20,31 @@ public class PickaxeManager : MonoBehaviour
 
         sphereCollider = GetComponent<SphereCollider>();
         sphereCollider.radius = pickaxe.Radius;
+        sphereCollider.center = new Vector3(0, 2, 0);
         sphereCollider.isTrigger = true;
 
         gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
+    public void Mine()
+    {
+        Vector3 contactPoint = oreCollider.ClosestPoint(transform.position);
+
+        Instantiate(EffectManager.Instance.EffectData.MineEffect).transform.position = contactPoint;
+
+        oreCollider.GetComponent<Ore>().OnHit(pickaxe.MiningPower, pickaxe);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent<Ore>(out var ore))
+        if (oreCollider.TryGetComponent<Ore>(out var ore))
         {
-            ore.OnHit(pickaxe.MiningPower, pickaxe);
+            oreCollider = ore;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
     }
 }

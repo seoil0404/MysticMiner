@@ -12,4 +12,5 @@ public class PlayerContext
 public class PlayerState
 {
     public float Speed => PlayerController.PlayerContext.MovementHandler.Speed;
+    public bool IsMining = false;
 }

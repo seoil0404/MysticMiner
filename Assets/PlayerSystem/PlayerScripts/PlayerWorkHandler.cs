@@ -48,11 +48,13 @@ public class PlayerWorkHandler : MonoBehaviour
 
     private void Mine()
     {
+        PlayerController.PlayerState.IsMining = true;
         PlayerController.PlayerContext.RenderManager.Mine();
     }
 
     private void UnMine()
     {
+        PlayerController.PlayerState.IsMining = false;
         PlayerController.PlayerContext.RenderManager.UnMine();
     }
 }

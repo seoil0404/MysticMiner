@@ -21,6 +21,9 @@ public class ChunkTerrainManager : MonoBehaviour
     public Material terrainMaterial;
     [SerializeField] private bool useColliders = false; // 필요 시만 MeshCollider 켜기
 
+    [Header("MonoBehaviors")]
+    [SerializeField] private OreGenerator oreGenerator;
+
     private Dictionary<Vector2Int, GameObject> activeChunks = new Dictionary<Vector2Int, GameObject>();
     private Queue<GameObject> chunkPool = new Queue<GameObject>();
 
@@ -139,7 +142,7 @@ public class ChunkTerrainManager : MonoBehaviour
         }
     }
 
-    Mesh GenerateChunkMesh(Vector2Int coord)
+    private Mesh GenerateChunkMesh(Vector2Int coord)
     {
         Mesh mesh = new Mesh();
         Vector3[] vertices = new Vector3[(chunkSize + 1) * (chunkSize + 1)];
@@ -203,6 +206,9 @@ public class ChunkTerrainManager : MonoBehaviour
                 vertIndex++;
             }
         }
+
+        Vector3 chunkWorldPos = new Vector3(coord.x * chunkSize, 0, coord.y * chunkSize);
+        oreGenerator.GenerateOre(vertices, chunkWorldPos);
 
         mesh.vertices = vertices;
         mesh.triangles = triangles;

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c9c1b991122c9459afd21bcb551411, type: 3}
+  m_Name: OreBlendData_1
+  m_EditorClassIdentifier: 
+  Ores:
+  - {fileID: 3096151558285861259, guid: eff754b8e1d115b42b3af9fcd2f9dfff, type: 3}
+  - {fileID: 6009479045960231136, guid: 5aed1c110cf055f4483153277e6b5a64, type: 3}
+  - {fileID: -5453771417491635684, guid: 690d43e6369d1984585430488ad46dca, type: 3}
+  - {fileID: -3654336934019432609, guid: b6ed0965674213b4f8e1693968c203be, type: 3}
+  - {fileID: 3355863958644564984, guid: aca6c46d53fb5a249b9736fbd3f1b2f6, type: 3}
