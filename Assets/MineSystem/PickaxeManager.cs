@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -9,7 +12,7 @@ public class PickaxeManager : MonoBehaviour
     private Rigidbody rigidBody;
     private SphereCollider sphereCollider;
 
-    private Ore ore;
+    private List<OrePair> oreList = new();
 
     public void Initialize(Pickaxe pickaxe)
     {
@@ -26,25 +29,67 @@ public class PickaxeManager : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
-    public void Mine()
+    private void Update()
     {
-        Vector3 contactPoint = oreCollider.ClosestPoint(transform.position);
+        oreList.RemoveAll(pair => pair == null || pair.Ore == null || pair.OreCollider == null);
+
+        if (PlayerController.PlayerState.IsPickaxeActive)
+        {
+            foreach(var pair in oreList)
+            {
+                Mine(pair);
+            }
+        }
+    }
+
+    public void Mine(OrePair pair)
+    {
+        if (pair.OreCollider == null)
+            return;
+
+        Vector3 contactPoint = pair.OreCollider.ClosestPoint(transform.position);
 
         Instantiate(EffectManager.Instance.EffectData.MineEffect).transform.position = contactPoint;
 
-        oreCollider.GetComponent<Ore>().OnHit(pickaxe.MiningPower, pickaxe);
+        pair.Ore.OnHit(pickaxe.MiningPower, pickaxe);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (oreCollider.TryGetComponent<Ore>(out var ore))
+        if (other.TryGetComponent<Ore>(out var ore))
         {
-            oreCollider = ore;
+            foreach (var pair in oreList)
+            {
+                if (pair.OreCollider = other) return;
+            }
+            oreList.Add(new OrePair(ore, other));
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        
+        if(other.TryGetComponent<Ore>(out var ore))
+        {
+            for(int index = 0; index < oreList.Count; index++)
+            {
+                if (oreList[index].OreCollider == other)
+                {
+                    oreList.RemoveAt(index);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+public class OrePair
+{
+    public Ore Ore;
+    public Collider OreCollider;
+
+    public OrePair(Ore ore, Collider oreCollider)
+    {
+        Ore = ore;
+        OreCollider = oreCollider;
     }
 }

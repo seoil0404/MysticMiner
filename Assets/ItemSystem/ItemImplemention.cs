@@ -12,5 +12,5 @@ public class CommonPick : Pickaxe
 
     public override string Description => "for starter";
 
-    public override float Radius => 0.5f;
+    public override float Radius => 2f;
 }

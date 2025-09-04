@@ -13,4 +13,6 @@ public class PlayerState
 {
     public float Speed => PlayerController.PlayerContext.MovementHandler.Speed;
     public bool IsMining = false;
+    private bool isPickaxeActive = false;
+    public bool IsPickaxeActive = false;
 }

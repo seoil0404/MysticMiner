@@ -55,6 +55,17 @@ public class PlayerWorkHandler : MonoBehaviour
     private void UnMine()
     {
         PlayerController.PlayerState.IsMining = false;
+        PlayerController.PlayerState.IsPickaxeActive = false;
         PlayerController.PlayerContext.RenderManager.UnMine();
+    }
+
+    public void ActivePickaxe()
+    {
+        if(PlayerController.PlayerState.IsMining) PlayerController.PlayerState.IsPickaxeActive = true;
+    }
+
+    public void DeActivePickaxe()
+    {
+        PlayerController.PlayerState.IsPickaxeActive = false;
     }
 }
