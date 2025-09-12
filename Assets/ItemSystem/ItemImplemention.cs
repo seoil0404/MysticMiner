@@ -4,7 +4,7 @@ public class CommonPick : Pickaxe
 {
     public override int MiningPower => 1;
 
-    public override float MiningSpeed => 3;
+    public override float MiningSpeed => 12;
 
     public override int DropRate => 1;
 

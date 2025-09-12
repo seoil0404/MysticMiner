@@ -7,6 +7,7 @@ public class OreGenerator : MonoBehaviour
     [SerializeField] private float maxGenerateRange;
     [SerializeField] private float generateRate;
     [SerializeField] private Vector3 generatePositionOffset;
+    [SerializeField] private Transform generateParent;
 
     private HashSet<Vector3> generatedChunks = new();
 
@@ -19,7 +20,7 @@ public class OreGenerator : MonoBehaviour
         {
             if(vertex.y < maxGenerateRange && Random.Range(0, 100f) < generateRate)
             {
-                Ore ore = Instantiate(oreBlendData.GetRandomOre());
+                Ore ore = Instantiate(oreBlendData.GetRandomOre(), generateParent);
                 ore.transform.position = vertex + generatePositionOffset + positionOffset;
             }
         }

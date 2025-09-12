@@ -59,6 +59,5 @@ public class PlayerController : MonoBehaviour
         }
 
         instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 }

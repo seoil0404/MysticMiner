@@ -31,14 +31,21 @@ public class PickaxeManager : MonoBehaviour
 
     private void Update()
     {
-        oreList.RemoveAll(pair => pair == null || pair.Ore == null || pair.OreCollider == null);
+        HandleMine();
+    }
 
+    private void HandleMine()
+    {
         if (PlayerController.PlayerState.IsPickaxeActive)
         {
-            foreach(var pair in oreList)
+            oreList.RemoveAll(pair => pair == null || pair.Ore == null || pair.OreCollider == null);
+
+            foreach (var pair in oreList)
             {
                 Mine(pair);
             }
+
+            oreList.Clear();
         }
     }
 
@@ -47,7 +54,7 @@ public class PickaxeManager : MonoBehaviour
         if (pair.OreCollider == null)
             return;
 
-        Vector3 contactPoint = pair.OreCollider.ClosestPoint(transform.position);
+        Vector3 contactPoint = transform.position;
 
         Instantiate(EffectManager.Instance.EffectData.MineEffect).transform.position = contactPoint;
 
