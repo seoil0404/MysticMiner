@@ -1,3 +1,4 @@
+<img width="1024" height="1024" alt="MysticMiner_Logo" src="https://github.com/user-attachments/assets/8cb57bf5-81b4-40ec-b058-349a7a412a7c" />
 # MysticMiner
 
 > 🌍 **A mobile RPG where you mine resources and fight monsters in an endless world**  
